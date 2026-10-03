@@ -1,42 +1,33 @@
 <!doctype html>
-<html lang="hi">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Mind Blocks — Unlimited Puzzle</title>
-<link rel="stylesheet" href="style.css">
-</head>
-<body>
-<div class="app">
-  <header>
-    <div>
-      <div class="brand">🧠 Mind Blocks</div>
-      <div class="sub">Unlimited Strategy Puzzle</div>
-    </div>
-    <button id="reset" class="icon">↻</button>
-  </header>
-
-  <section class="stats">
-    <div><span>Level</span><b id="level">1</b></div>
-    <div><span>Score</span><b id="score">0</b></div>
-    <div><span>Best</span><b id="best">0</b></div>
-  </section>
-
-  <div class="tip" id="tip">सोचकर block रखो — आगे की जगह भी देखो!</div>
-
-  <main>
-    <div id="board" class="board" aria-label="Puzzle board"></div>
-    <div class="tray" id="tray"></div>
-  </main>
-
-  <section class="controls">
-    <button id="undo">↶ Undo</button>
-    <button id="hint">💡 Hint</button>
-    <button id="next" disabled>Next Level ▶</button>
-  </section>
-
-  <div id="message" class="message hidden"></div>
-</div>
-<script src="game.js"></script>
-</body>
-</html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="theme-color" content="#5b6bc0"><title>Mind Blocks – Unlimited Strategy Puzzle</title>
+<link rel="stylesheet" href="style.css"></head><body>
+<main id="app">
+<section id="home" class="screen on">
+ <div class="logo" aria-hidden="true"><i class="b c1"></i><i class="b c2"></i><i class="b c3"></i><i class="b c5"></i></div>
+ <h1>🧠 Mind Blocks</h1><p class="tag">Unlimited Strategy Puzzle</p>
+ <div class="hstats"><div><b id="h-lv">1</b><span>Level</span></div><div><b id="h-best">0</b><span>Best score</span></div><div><b id="h-hi">1</b><span>Highest level</span></div></div>
+ <div class="hbtns">
+  <button class="btn big pri" data-act="play">▶ PLAY</button>
+  <button class="btn big" data-act="ach">🏆 ACHIEVEMENTS</button>
+  <button class="btn big" data-act="stats">📊 STATISTICS</button>
+  <button class="btn big" data-act="settings">⚙️ SETTINGS</button>
+ </div>
+</section>
+<section id="game" class="screen">
+ <header class="bar"><button class="ib" data-act="home" aria-label="Home">←</button>
+  <div class="ttl"><b>🧠 Mind Blocks</b><small>Unlimited Strategy Puzzle</small></div>
+  <button class="ib" data-act="sound" id="b-sound" aria-label="Toggle sound">🔊</button>
+  <button class="ib" data-act="theme" id="b-theme" aria-label="Toggle theme">🌙</button>
+  <button class="ib" data-act="reset" aria-label="Restart level">↻</button></header>
+ <div class="hud"><div><span>LEVEL</span><b id="s-lv">1</b></div><div><span>SCORE</span><b id="s-sc">0</b></div><div><span>BEST</span><b id="s-best">0</b></div></div>
+ <div class="msg"><div id="goal"></div><div class="bar2"><i id="prog"></i></div><div id="tip"></div></div>
+ <div id="bw"><div id="board" role="grid" aria-label="8 by 8 board"></div></div>
+ <div id="tray" aria-label="Available pieces"></div>
+ <div class="ctl"><button class="btn" id="b-undo" data-act="undo">↶ Undo</button><button class="btn" id="b-hint" data-act="hint">💡 Hint</button><button class="btn pri" id="b-next" data-act="next">▶ Next Level</button></div>
+</section>
+<section id="panel" class="screen"></section>
+</main>
+<div id="modal" hidden></div><div id="toast" role="status" aria-live="polite"></div>
+<script src="game.js"></script></body></html>
