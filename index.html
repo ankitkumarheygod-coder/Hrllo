@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Mind Blocks — Unlimited Puzzle</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+  <header>
+    <div>
+      <div class="brand">🧠 Mind Blocks</div>
+      <div class="sub">Unlimited Strategy Puzzle</div>
+    </div>
+    <button id="reset" class="icon">↻</button>
+  </header>
+
+  <section class="stats">
+    <div><span>Level</span><b id="level">1</b></div>
+    <div><span>Score</span><b id="score">0</b></div>
+    <div><span>Best</span><b id="best">0</b></div>
+  </section>
+
+  <div class="tip" id="tip">सोचकर block रखो — आगे की जगह भी देखो!</div>
+
+  <main>
+    <div id="board" class="board" aria-label="Puzzle board"></div>
+    <div class="tray" id="tray"></div>
+  </main>
+
+  <section class="controls">
+    <button id="undo">↶ Undo</button>
+    <button id="hint">💡 Hint</button>
+    <button id="next" disabled>Next Level ▶</button>
+  </section>
+
+  <div id="message" class="message hidden"></div>
+</div>
+<script src="game.js"></script>
+</body>
+</html>
