@@ -59,7 +59,7 @@ function hasAnyMove(){return pieces.some(p=>{for(let y=0;y<N;y++)for(let x=0;x<N
 function gameOver(){document.getElementById("message").classList.remove("hidden");document.getElementById("message").textContent=`Level ${level} — जगह खत्म! Reset करके फिर सोचो.`}
 document.getElementById("undo").onclick=()=>{if(history.length){let h=JSON.parse(history.pop());grid=h.grid;pieces=h.pieces;score=h.score;selected=-1;document.getElementById("message").classList.add("hidden");render()}};
 document.getElementById("reset").onclick=()=>{score=0;generate();document.getElementById("message").classList.add("hidden")};
-document.getElementById("hint").onclick=()=>{tipEl.textContent="Hint: सबसे बड़े piece को रखने से पहले अगले 2–3 moves के लिए खाली जगह बचाओ।"}};
+document.getElementById("hint").onclick=()=>{tipEl.textContent="Hint: सबसे बड़े piece को रखने से पहले अगले 2–3 moves के लिए खाली जगह बचाओ।"};
 document.getElementById("next").onclick=()=>{if(!pieces.length){level++;localStorage.setItem("mb_level",level);generate()}};
 function updateTip(){let d=level<20?"पहले placement समझो।":level<100?"अब आगे की जगह बचाकर चलो।":level<500?"Trap pieces पर ध्यान दो — हर खाली cell की value है।":"Master mode: हर move को 2–3 चाल आगे सोचो।";tipEl.textContent=d}
 generate();
