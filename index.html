@@ -1,33 +1,157 @@
-<!doctype html>
-<html lang="en"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
-<meta name="theme-color" content="#5b6bc0"><title>Mind Blocks – Unlimited Strategy Puzzle</title>
-<link rel="stylesheet" href="style.css"></head><body>
-<main id="app">
-<section id="home" class="screen on">
- <div class="logo" aria-hidden="true"><i class="b c1"></i><i class="b c2"></i><i class="b c3"></i><i class="b c5"></i></div>
- <h1>🧠 Mind Blocks</h1><p class="tag">Unlimited Strategy Puzzle</p>
- <div class="hstats"><div><b id="h-lv">1</b><span>Level</span></div><div><b id="h-best">0</b><span>Best score</span></div><div><b id="h-hi">1</b><span>Highest level</span></div></div>
- <div class="hbtns">
-  <button class="btn big pri" data-act="play">▶ PLAY</button>
-  <button class="btn big" data-act="ach">🏆 ACHIEVEMENTS</button>
-  <button class="btn big" data-act="stats">📊 STATISTICS</button>
-  <button class="btn big" data-act="settings">⚙️ SETTINGS</button>
- </div>
-</section>
-<section id="game" class="screen">
- <header class="bar"><button class="ib" data-act="home" aria-label="Home">←</button>
-  <div class="ttl"><b>🧠 Mind Blocks</b><small>Unlimited Strategy Puzzle</small></div>
-  <button class="ib" data-act="sound" id="b-sound" aria-label="Toggle sound">🔊</button>
-  <button class="ib" data-act="theme" id="b-theme" aria-label="Toggle theme">🌙</button>
-  <button class="ib" data-act="reset" aria-label="Restart level">↻</button></header>
- <div class="hud"><div><span>LEVEL</span><b id="s-lv">1</b></div><div><span>SCORE</span><b id="s-sc">0</b></div><div><span>BEST</span><b id="s-best">0</b></div></div>
- <div class="msg"><div id="goal"></div><div class="bar2"><i id="prog"></i></div><div id="tip"></div></div>
- <div id="bw"><div id="board" role="grid" aria-label="8 by 8 board"></div></div>
- <div id="tray" aria-label="Available pieces"></div>
- <div class="ctl"><button class="btn" id="b-undo" data-act="undo">↶ Undo</button><button class="btn" id="b-hint" data-act="hint">💡 Hint</button><button class="btn pri" id="b-next" data-act="next">▶ Next Level</button></div>
-</section>
-<section id="panel" class="screen"></section>
-</main>
-<div id="modal" hidden></div><div id="toast" role="status" aria-live="polite"></div>
-<script src="game.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Arrow Puzzle Game</title>
+    <style>
+        body {
+            background-color: #1a1a2e;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: white;
+        }
+
+        h1 { margin-bottom: 10px; color: #4ea8de; }
+        p { margin-bottom: 30px; color: #a9b3c4; }
+
+        #game-board {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            background-color: #16213e;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+
+        .block {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: inset 0 -3px 0 rgba(0,0,0,0.3), 0 4px 6px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease-in, opacity 0.3s ease-in;
+            user-select: none;
+        }
+
+        /* Animations for flying away */
+        .fly-UP { transform: translateY(-300px); opacity: 0; }
+        .fly-DOWN { transform: translateY(300px); opacity: 0; }
+        .fly-LEFT { transform: translateX(-300px); opacity: 0; }
+        .fly-RIGHT { transform: translateX(300px); opacity: 0; }
+
+        /* Animation when a block is stuck */
+        .shake { animation: shake-animation 0.3s; }
+
+        @keyframes shake-animation {
+            0% { transform: translate(0, 0); }
+            25% { transform: translate(-5px, 0); }
+            50% { transform: translate(5px, 0); }
+            75% { transform: translate(-5px, 0); }
+            100% { transform: translate(0, 0); }
+        }
+        
+        #win-msg {
+            display: none;
+            margin-top: 20px;
+            font-size: 24px;
+            color: #4ade80;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Arrow Puzzle</h1>
+    <p>Tap the arrows to clear the board!</p>
+
+    <div id="game-board"></div>
+    <div id="win-msg">🎉 Level Cleared! You Win! 🎉</div>
+
+    <script>
+        const board = document.getElementById('game-board');
+        const winMsg = document.getElementById('win-msg');
+        const blockSize = 60; // 50px block + 10px spacing
+        const offset = 30; // Center offset
+
+        // यहाँ आप अपना लेवल डिज़ाइन कर सकते हैं (x और y ग्रिड पोज़िशन हैं)
+        let level = [
+            { id: 1, x: 1, y: 1, dir: 'RIGHT', symbol: '➡️', color: '#ff595e' },
+            { id: 2, x: 2, y: 1, dir: 'DOWN', symbol: '⬇️', color: '#ffca3a' },
+            { id: 3, x: 1, y: 2, dir: 'UP', symbol: '⬆️', color: '#8ac926' },
+            { id: 4, x: 2, y: 2, dir: 'LEFT', symbol: '⬅️', color: '#1982c4' },
+            { id: 5, x: 3, y: 1, dir: 'RIGHT', symbol: '➡️', color: '#6a4c93' },
+            { id: 6, x: 2, y: 3, dir: 'DOWN', symbol: '⬇️', color: '#ff924c' }
+        ];
+
+        let activeBlocks = [...level];
+
+        function initGame() {
+            board.innerHTML = '';
+            winMsg.style.display = 'none';
+            activeBlocks.forEach(block => {
+                let el = document.createElement('div');
+                el.className = 'block';
+                el.style.left = (block.x * blockSize + offset) + 'px';
+                el.style.top = (block.y * blockSize + offset) + 'px';
+                el.style.backgroundColor = block.color;
+                el.innerText = block.symbol;
+                
+                // Click Event
+                el.onclick = () => tryMove(block, el);
+                
+                board.appendChild(el);
+            });
+        }
+
+        function tryMove(block, element) {
+            let isBlocked = false;
+
+            // लॉजिक चेक: क्या रास्ते में कोई और ब्लॉक है?
+            for (let other of activeBlocks) {
+                if (other.id === block.id) continue;
+
+                if (block.dir === 'UP' && other.x === block.x && other.y < block.y) isBlocked = true;
+                if (block.dir === 'DOWN' && other.x === block.x && other.y > block.y) isBlocked = true;
+                if (block.dir === 'LEFT' && other.y === block.y && other.x < block.x) isBlocked = true;
+                if (block.dir === 'RIGHT' && other.y === block.y && other.x > block.x) isBlocked = true;
+            }
+
+            if (isBlocked) {
+                // अगर रास्ता बंद है तो ब्लॉक हिलेगा (Shake)
+                element.classList.remove('shake');
+                void element.offsetWidth; // Trigger reflow
+                element.classList.add('shake');
+            } else {
+                // अगर रास्ता साफ़ है तो ब्लॉक उड़ जाएगा
+                element.classList.add('fly-' + block.dir);
+                
+                // ब्लॉक को एक्टिव लिस्ट से हटाएँ
+                activeBlocks = activeBlocks.filter(b => b.id !== block.id);
+                
+                // एनिमेशन के बाद स्क्रीन से हटा दें
+                setTimeout(() => {
+                    element.remove();
+                    // चेक करें कि क्या गेम जीत लिया गया है
+                    if(activeBlocks.length === 0) {
+                        winMsg.style.display = 'block';
+                    }
+                }, 300);
+            }
+        }
+
+        // गेम स्टार्ट करें
+        initGame();
+    </script>
+</body>
+</html>
