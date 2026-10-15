@@ -1,0 +1,54 @@
+<!-- index.html: page structure only (Home, Quiz, Result screens). Scripts load in order: storage, quiz, ui, app. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quiz</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <!-- HOME -->
+    <section id="screen-home" class="screen">
+      <h1>Quiz</h1>
+
+      <label class="btn primary file-btn" for="file-input">Upload JSON file</label>
+      <input type="file" id="file-input" accept=".json,application/json" hidden>
+
+      <p class="or">or paste JSON</p>
+      <textarea id="json-text" rows="6" placeholder='[{"id":1,"question":"...","options":["A","B"],"answer":0}]'></textarea>
+      <button id="btn-load-text" class="btn primary">Start from pasted JSON</button>
+
+      <p id="error-msg" class="error hidden"></p>
+
+      <hr>
+      <button id="btn-practice" class="btn secondary hidden">Practice wrong questions (0)</button>
+      <button id="btn-export" class="btn secondary hidden">Export wrong questions</button>
+    </section>
+
+    <!-- QUIZ -->
+    <section id="screen-quiz" class="screen hidden">
+      <p id="quiz-progress" class="progress"></p>
+      <h2 id="quiz-question"></h2>
+      <div id="quiz-options"></div>
+      <p id="quiz-feedback" class="feedback"></p>
+      <button id="btn-next" class="btn primary hidden">Next</button>
+      <button id="btn-quit" class="btn link">Quit to home</button>
+    </section>
+
+    <!-- RESULT -->
+    <section id="screen-result" class="screen hidden">
+      <h2>Finished</h2>
+      <p id="result-score" class="big"></p>
+      <p id="result-note"></p>
+      <button id="btn-home" class="btn primary">Back to home</button>
+    </section>
+  </main>
+
+  <script src="storage.js"></script>
+  <script src="quiz.js"></script>
+  <script src="ui.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
