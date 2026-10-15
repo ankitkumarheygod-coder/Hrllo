@@ -1,0 +1,111 @@
+/* style.css: all styling. Mobile-first, large tap-friendly buttons, code block support. */
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: #f4f6fb;
+  color: #1c2333;
+  line-height: 1.4;
+}
+
+main { max-width: 600px; margin: 0 auto; padding: 16px; }
+h1, h2 { margin: 8px 0 16px; }
+.hidden { display: none !important; }
+
+.btn {
+  display: block;
+  width: 100%;
+  min-height: 52px;
+  padding: 14px 16px;
+  margin: 10px 0;
+  font-size: 1.05rem;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  text-align: center;
+  cursor: pointer;
+}
+.btn.primary { background: #3558e6; color: #fff; }
+.btn.secondary { background: #fff; color: #3558e6; border-color: #3558e6; }
+.btn.link { background: none; color: #667; min-height: 44px; }
+
+textarea {
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  font-family: monospace;
+  border: 2px solid #d3d9e8;
+  border-radius: 12px;
+}
+
+.or { text-align: center; color: #667; margin: 16px 0 8px; }
+hr { border: 0; border-top: 1px solid #d3d9e8; margin: 24px 0 8px; }
+
+.error {
+  background: #fde8e8;
+  color: #b00020;
+  padding: 12px;
+  border-radius: 10px;
+  white-space: pre-wrap;
+}
+
+.progress { color: #667; margin: 0; }
+
+/* Question text (keeps line breaks from \n) */
+.question {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 8px 0 16px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.option {
+  display: block;
+  width: 100%;
+  min-height: 52px;
+  padding: 14px 16px;
+  margin: 10px 0;
+  font-size: 1.05rem;
+  text-align: left;
+  background: #fff;
+  border: 2px solid #d3d9e8;
+  border-radius: 12px;
+  cursor: pointer;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.option:disabled { cursor: default; color: inherit; }
+.option.correct { background: #dff5e3; border-color: #2e9e4f; }
+.option.wrong { background: #fde8e8; border-color: #d32f2f; }
+
+/* Code support: `inline code` and ``` code blocks ``` */
+.inline-code {
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  font-size: 0.92em;
+  font-weight: 400;
+  background: rgba(53, 88, 230, 0.12);
+  padding: 1px 6px;
+  border-radius: 6px;
+}
+.code-block {
+  display: block;
+  margin: 8px 0;
+  padding: 12px;
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  font-size: 0.9rem;
+  font-weight: 400;
+  line-height: 1.5;
+  white-space: pre;
+  overflow-x: auto;
+  background: #1e2233;
+  color: #e8ecf8;
+  border-radius: 10px;
+  text-align: left;
+}
+
+.feedback { font-weight: 600; min-height: 1.4em; }
+.feedback.ok { color: #2e9e4f; }
+.feedback.bad { color: #d32f2f; }
+
+.big { font-size: 2rem; font-weight: 700; margin: 8px 0; }
