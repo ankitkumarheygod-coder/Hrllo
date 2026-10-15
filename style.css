@@ -1,4 +1,4 @@
-/* style.css: all styling. Mobile-first, large tap-friendly buttons, code block support. */
+/* style.css: all styling. Mobile-first, large tap-friendly buttons, code and formula support. */
 * { box-sizing: border-box; }
 
 body {
@@ -104,10 +104,11 @@ hr { border: 0; border-top: 1px solid #d3d9e8; margin: 24px 0 8px; }
   text-align: left;
 }
 
+/* Formula support: subscript and superscript without breaking line spacing */
+sub, sup { font-size: 0.75em; line-height: 0; }
+
 .feedback { font-weight: 600; min-height: 1.4em; }
 .feedback.ok { color: #2e9e4f; }
 .feedback.bad { color: #d32f2f; }
 
 .big { font-size: 2rem; font-weight: 700; margin: 8px 0; }
-/* Formula support: subscript and superscript without breaking line spacing */
-sub, sup { font-size: 0.75em; line-height: 0; }
